@@ -1,6 +1,6 @@
 {
   "name": "directus-cut",
-  "version": "0.0.3",
+  "version": "0.0.1",
   "description": "Directus-Common-Utilities - Useful functions and wrappers for Directus",
   "main": "index.js",
   "types": "index.d.ts",
