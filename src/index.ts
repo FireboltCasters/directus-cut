@@ -1,4 +1,4 @@
 /* istanbul ignore file */
-import Example from "./Example";
+import Example from './Example';
 
-export { Example };
+export {Example};
