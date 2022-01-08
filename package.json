@@ -1,7 +1,7 @@
 {
-  "name": "@fireboltcasters/<packageName>",
+  "name": "directus-cut",
   "version": "0.0.1",
-  "description": "<packageDescription>",
+  "description": "Directus-Common-Utilities - Useful functions and wrappers for Directus",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
@@ -19,33 +19,33 @@
     "clean": "rimraf ./build && gts clean",
     "lint": "gts lint",
     "fix": "gts fix",
-    "setup": "npm install && node setup.js && rimraf setup.js setup.json"
+    "setup": "npm install && node setup.js && rimraf setup.js setup.json && rimraf package-lock.json && npm install"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FireboltCasters/npm-template.git"
+    "url": "git+https://github.com/FireboltCasters/directus-cut"
   },
   "keywords": [
-    "npm-template"
+    "directus", "cut", "utility"
   ],
-  "author": "Steffen Droppelmann",
+  "author": "Nils Baumgartner",
   "contributors": [
     {
       "name": "Nils Baumgartner",
       "email": "nilsbaumgartner1994@gmail.com",
-      "url": "https://github.com/FireboltCasters"
+      "url": "https://github.com/NilsBaumgartner1994"
     },
     {
       "name": "Steffen Droppelmann",
       "email": "steffen.droppelmann@gmail.com",
-      "url": "https://github.com/FireboltCasters"
+      "url": "https://github.com/sdroppelmann"
     }
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/FireboltCasters/npm-template/issues"
+    "url": "https://github.com/FireboltCasters/directus-cut/issues"
   },
-  "homepage": "https://github.com/FireboltCasters/npm-template#readme",
+  "homepage": "https://github.com/FireboltCasters/directus-cut#readme",
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "@types/node": "^16.0.0",
