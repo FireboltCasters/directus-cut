@@ -15,7 +15,7 @@ export default class RedirectWithToken {
     router.get('/', (req: any, res: any) => {
       let refresh_token = req.cookies.directus_refresh_token;
       let redirect = req.query.redirect;
-      let redirectURL = redirect+refresh_token;
+      let redirectURL = redirect + refresh_token;
       res.redirect(redirectURL);
     });
   }
