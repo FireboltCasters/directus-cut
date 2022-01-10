@@ -1,7 +1,7 @@
 /* istanbul ignore file */
-import BackendHelper from './backendHelpers/BackendHelper';
+import BackendHelper from './ignoreCoverage/BackendHelper';
 import Example from './Example';
-import RedirectWithToken from "./backendHelpers/RedirectWithToken";
+import RedirectWithToken from "./ignoreCoverage/RedirectWithToken";
 
 export {Example};
 export {BackendHelper};
