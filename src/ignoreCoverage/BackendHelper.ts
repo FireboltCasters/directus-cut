@@ -1,5 +1,5 @@
 import RedirectWithToken from './RedirectWithToken';
-import AccountHelper from "./AccountHelper";
+import AccountHelper from './AccountHelper';
 
 export default class BackendHelper {
   static RedirectWithToken = RedirectWithToken;
