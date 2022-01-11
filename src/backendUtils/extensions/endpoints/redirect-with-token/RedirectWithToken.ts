@@ -6,9 +6,9 @@
     directusCut.RedirectWithToken.configureRouter(router);
  };
 
- For example: https://<PUBLIC_URL>/api/auth/login/<AUTH_PROVIDER>?redirect=https://<PUBLIC_URL>/api/redirect-with-token?redirect=http://localhost?access_token=
+ For example: https://<PUBLIC_URL>/api/auth/login/<AUTH_PROVIDER>?redirect=https://<PUBLIC_URL>/api/redirect-with-token?redirect=http://127.0.0.1?access_token=
  This will get the access_token and will redirect the user to:
- http://localhost?access_token=XXXXXXXXX
+ http://127.0.01?access_token=XXXXXXXXX
  */
 export default class RedirectWithToken {
   static configureRouter(router: any) {
