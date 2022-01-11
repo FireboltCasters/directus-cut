@@ -1,6 +1,6 @@
-import AccountHelper from "./AccountHelper";
-import AvatarHelper from "./AvatarHelper";
-import FolderHelper from "./FolderHelper";
+import AccountHelper from './AccountHelper';
+import AvatarHelper from './AvatarHelper';
+import FolderHelper from './FolderHelper';
 
 export default class BackendHelper {
   static AccountHelper = AccountHelper;
