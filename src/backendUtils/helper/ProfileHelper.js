@@ -10,7 +10,7 @@ export default class ProfileHelper{
  * @param env the environment from the registered hook/directus instance
  * @returns {Promise<*>} Returns the Userprofile from the Auth2 instance
  */
- async static getUserProfile(userId, provider, database, env){
+ static async getUserProfile(userId, provider, database, env){
   //lets get the existing user first
   const existingUser = await database("directus_users")
       .where({ id: userId })

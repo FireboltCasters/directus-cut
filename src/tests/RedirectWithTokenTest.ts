@@ -1,9 +1,9 @@
 import RedirectWithToken from '../backendUtils/extensions/endpoints/redirect-with-token/RedirectWithToken';
 
-let refresh_token = 'directus_refresh_token' + Math.random() + '';
-let redirect = 'redirect' + Math.random() + '';
+const refresh_token = 'directus_refresh_token' + Math.random() + '';
+const redirect = 'redirect' + Math.random() + '';
 
-let exampleReq = {
+const exampleReq = {
   cookies: {
     directus_refresh_token: refresh_token,
   },
@@ -13,15 +13,15 @@ let exampleReq = {
 };
 
 let routerFunc: any = null;
-let routerPath: string = '';
-let router = {
+let routerPath = '';
+const router = {
   get: (path: any, func: any) => {
     routerPath = path;
     routerFunc = func;
   },
   mockRouting: (path: string, req: any, res: any) => {
     if (path === routerPath) {
-      if (!!routerFunc) {
+      if (routerFunc) {
         try {
           routerFunc(req, res);
           return true;
@@ -40,13 +40,13 @@ test('Set a user to an admin', async () => {
   RedirectWithToken.registerEndpoint(router);
 
   let resultingRedirectURL = null;
-  let exampleRes = {
+  const exampleRes = {
     redirect: (redirectURL: string) => {
       resultingRedirectURL = redirectURL;
     },
   };
 
-  let expectingRedirectURL = redirect + refresh_token;
+  const expectingRedirectURL = redirect + refresh_token;
 
   router.mockRouting('/', exampleReq, exampleRes);
   expect(resultingRedirectURL).toBeTruthy();

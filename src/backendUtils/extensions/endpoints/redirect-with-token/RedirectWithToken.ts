@@ -13,14 +13,14 @@
 export default class RedirectWithToken {
   private static configureRouter(router: any) {
     router.get('/', (req: any, res: any) => {
-      let refresh_token = req.cookies.directus_refresh_token;
-      let redirect = req.query.redirect;
-      let redirectURL = redirect + refresh_token;
+      const refresh_token = req.cookies.directus_refresh_token;
+      const redirect = req.query.redirect;
+      const redirectURL = redirect + refresh_token;
       res.redirect(redirectURL);
     });
   }
 
-  static registerEndpoint(){
+  static registerEndpoint() {
     return RedirectWithToken.configureRouter;
   }
 }
