@@ -13,9 +13,9 @@ export default class AvatarDeleteCascadeHook {
     registerFunctions: TypeSpecificRegisterFunctions,
     context: RegisterFunctionContext
   ) => {
-      registerFunctions.filter(
+    registerFunctions.filter(
       'users.delete',
-          // @ts-ignore
+      // @ts-ignore
       async (payload: any, input: any, {database, schema, accountability}) => {
         let usersIds = payload; //get the user ids
         for (let userId of usersIds) {
