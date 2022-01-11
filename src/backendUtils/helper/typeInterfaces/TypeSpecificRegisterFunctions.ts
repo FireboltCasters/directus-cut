@@ -3,7 +3,7 @@
  */
 export default interface TypeSpecificRegisterFunctions {
   filter(event: string, func: any): any;
-  action(): any;
+  action(event: string, func: any): any;
   init(): any;
   schedule(): any;
 }

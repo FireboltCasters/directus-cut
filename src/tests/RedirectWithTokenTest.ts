@@ -37,7 +37,7 @@ let router = {
 };
 
 test('Set a user to an admin', async () => {
-  RedirectWithToken.configureRouter(router);
+  RedirectWithToken.registerEndpoint(router);
 
   let resultingRedirectURL = null;
   let exampleRes = {

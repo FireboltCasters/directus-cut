@@ -11,12 +11,16 @@
  http://127.0.01?access_token=XXXXXXXXX
  */
 export default class RedirectWithToken {
-  static configureRouter(router: any) {
+  private static configureRouter(router: any) {
     router.get('/', (req: any, res: any) => {
       let refresh_token = req.cookies.directus_refresh_token;
       let redirect = req.query.redirect;
       let redirectURL = redirect + refresh_token;
       res.redirect(redirectURL);
     });
+  }
+
+  static registerEndpoint(){
+    return RedirectWithToken.configureRouter;
   }
 }

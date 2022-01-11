@@ -17,7 +17,7 @@ export default class FolderHelper {
     accountability,
     exceptions,
     folder_name,
-    parent_id
+    parent_id=null
   ) {
     const {InvalidPayloadException} = exceptions;
     if (!folder_name) {

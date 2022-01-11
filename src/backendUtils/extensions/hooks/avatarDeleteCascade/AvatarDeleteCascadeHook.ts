@@ -9,10 +9,15 @@ export default class AvatarDeleteCascadeHook {
   /**
    * A small hook to delete the avatar image before user deletion
    */
-  static avatarDeleteCascadeHook = (
+  static registerHook(){
+    return AvatarDeleteCascadeHook.handleHook;
+  }
+
+
+  private static handleHook(
     registerFunctions: TypeSpecificRegisterFunctions,
     context: RegisterFunctionContext
-  ) => {
+  ){
       registerFunctions.filter(
       'users.delete',
           // @ts-ignore
