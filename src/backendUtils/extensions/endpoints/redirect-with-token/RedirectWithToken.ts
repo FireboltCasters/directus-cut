@@ -21,6 +21,6 @@ export default class RedirectWithToken {
   }
 
   static registerEndpoint() {
-    return RedirectWithToken.configureRouter;
+    return RedirectWithToken.configureRouter.bind(null);
   }
 }

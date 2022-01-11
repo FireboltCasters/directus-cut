@@ -10,7 +10,7 @@ export default class AvatarDeleteCascadeHook {
    * A small hook to delete the avatar image before user deletion
    */
   static registerHook() {
-    return AvatarDeleteCascadeHook.handleHook;
+    return AvatarDeleteCascadeHook.handleHook.bind(null);
   }
 
   private static handleHook(
