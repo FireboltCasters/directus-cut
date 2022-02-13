@@ -24,7 +24,7 @@ export default class FileDeleteCascadeHook {
     context: RegisterFunctionContext
   ) {
     registerFunctions.filter(
-      collection_name + '.delete',
+      collection_name + '.items.delete',
       // @ts-ignore
       async (payload: any, input: any, {database, schema, accountability}) => {
         const collectionIds = payload; //get the user ids
