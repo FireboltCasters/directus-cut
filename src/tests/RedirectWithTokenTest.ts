@@ -2,8 +2,8 @@ import RedirectWithToken from '../backendUtils/extensions/endpoints/redirect-wit
 
 const refresh_token = 'directus_refresh_token' + Math.random() + '';
 const redirect = 'redirect' + Math.random() + '';
-const allowedRoute = "/allowed/";
-const listOfAllowedRedirects: string[] = [allowedRoute+"*"]
+const allowedRoute = '/allowed/';
+const listOfAllowedRedirects: string[] = [allowedRoute + '*'];
 
 const exampleReq = {
   cookies: {
@@ -42,9 +42,10 @@ test('Test redirect with endpoint empty', async () => {
   RedirectWithToken.registerEndpoint();
 });
 
-
 test('Test allowed redirect', async () => {
-  let configureMethod = RedirectWithToken.registerEndpoint(listOfAllowedRedirects);
+  let configureMethod = RedirectWithToken.registerEndpoint(
+    listOfAllowedRedirects
+  );
   configureMethod(router);
 
   let resultingRedirectURL = null;
@@ -55,7 +56,7 @@ test('Test allowed redirect', async () => {
     },
     sendStatus: (code: number) => {
       resultingError = code;
-    }
+    },
   };
 
   const expectingRedirectURL = redirect + refresh_token;
