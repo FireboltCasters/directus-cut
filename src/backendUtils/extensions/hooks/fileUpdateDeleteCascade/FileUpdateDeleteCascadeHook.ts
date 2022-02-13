@@ -29,8 +29,7 @@ export default class FileUpdateDeleteCascadeHook {
       collection_name + '.items.update',
       // @ts-ignore
       async (payload: any, input: any, {database, schema, accountability}) => {
-        let newfilename = payload[file_field_name];
-        if (!!newfilename) {
+        if (file_field_name in payload) { //is our searched key updated (value can be null!)
           let collectionIds = input.keys;
           for (const collectionId of collectionIds) {
             // for all users which get deleted
