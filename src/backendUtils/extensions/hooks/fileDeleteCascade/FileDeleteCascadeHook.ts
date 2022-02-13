@@ -1,14 +1,16 @@
 /**
- * Helper for Account things
+ * Delete Images if item gets deleted hook
  */
 import AvatarHelper from '../../../helper/AvatarHelper';
 import TypeSpecificRegisterFunctions from '../../../helper/typeInterfaces/TypeSpecificRegisterFunctions';
 import RegisterFunctionContext from '../../../helper/typeInterfaces/RegisterFunctionContext';
 
 export default class FileDeleteCascadeHook {
-  /**
-   * A small hook to delete the avatar image before user deletion
-   */
+    /**
+     * Register this hook to delete files when item is deleted
+     * @param collection_name the collection name
+     * @param file_field_name the field name of the file
+     */
   static registerHook(collection_name: string, file_field_name: string) {
     return FileDeleteCascadeHook.handleHook.bind(
       null,
