@@ -27,23 +27,23 @@ export default class FileUpdateDeleteCascadeHook {
       collection_name + '.items.update',
       // @ts-ignore
       async (payload: any, input: any, {database, schema, accountability}) => {
-          let newfilename = payload[file_field_name];
-          if(!!newfilename){
-              let collectionIds = input.keys;
-              for (const collectionId of collectionIds) {
-                  // for all users which get deleted
-                  await AvatarHelper.deleteFileOfCollection(
-                      context.services,
-                      database,
-                      schema,
-                      accountability,
-                      context.exceptions,
-                      collection_name,
-                      file_field_name,
-                      collectionId
-                  ); //delete avatar file
-              }
+        let newfilename = payload[file_field_name];
+        if (!!newfilename) {
+          let collectionIds = input.keys;
+          for (const collectionId of collectionIds) {
+            // for all users which get deleted
+            await AvatarHelper.deleteFileOfCollection(
+              context.services,
+              database,
+              schema,
+              accountability,
+              context.exceptions,
+              collection_name,
+              file_field_name,
+              collectionId
+            ); //delete avatar file
           }
+        }
 
         return payload;
       }
