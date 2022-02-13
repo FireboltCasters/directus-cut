@@ -9,6 +9,51 @@ export default class AvatarHelper {
    * @param userId the userId
    * @returns {Promise<void>}
    */
+  static async deleteFileOfCollection(
+      services,
+      database,
+      schema,
+      accountability,
+      exceptions,
+      collection_name,
+      file_field_name,
+      collectionId
+  ) {
+    const filesService = AvatarHelper.getAdminFileServiceInstance(
+        schema,
+        accountability,
+        services
+    );
+    const {InvalidPayloadException} = exceptions;
+    if (!collectionId) {
+      throw new InvalidPayloadException(
+          'deleteFileOfCollection: No collectionId provided: '
+      );
+    }
+
+    const existingItem = await database(collection_name)
+        .where({id: collectionId})
+        .first(); //get user
+    if (!existingItem) {
+      //handle no user found error
+      throw new InvalidPayloadException(
+          'deleteFileOfCollection: No item found with id: ' + collectionId
+      );
+    }
+
+    const file_filename = existingItem[file_field_name]; //get filename of avatar
+    if (file_filename) {
+      //if has image
+      await filesService.deleteOne(file_filename); //delete file
+    }
+  }
+
+
+  /**
+   * Deletes the avatar file for a userId
+   * @param userId the userId
+   * @returns {Promise<void>}
+   */
   static async deleteAvatarOfUser(
     services,
     database,

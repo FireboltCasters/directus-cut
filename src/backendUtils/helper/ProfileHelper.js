@@ -58,10 +58,7 @@ export default class ProfileHelper {
     });
 
     //get the user profile from the remote auth2 instance
-    const userInfo = await client.userinfo(tokenSet);
-    console.log(userInfo);
-
-    return userInfo;
+    return await client.userinfo(tokenSet);
   }
 
   /**
