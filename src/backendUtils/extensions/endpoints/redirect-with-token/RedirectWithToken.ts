@@ -11,26 +11,18 @@
  http://127.0.01?access_token=XXXXXXXXX
  */
 export default class RedirectWithToken {
-  private static configureRouter(listOfAllowedRedirects, router: any) {
+  private static configureRouter(listOfAllowedRedirects: string[], router: any) {
     router.get('/', (req: any, res: any) => {
       const refresh_token = req.cookies.directus_refresh_token;
       const redirect = req.query.redirect;
       const redirectURL = redirect + refresh_token;
-
       //TODO allow regex and wildcards
-      if (
-        !listOfAllowedRedirects ||
-        listOfAllowedRedirects.includes(redirect)
-      ) {
-        // https://github.com/directus/directus/discussions/8867#discussioncomment-1977411
-        res.redirect(redirectURL);
-      } else {
-        res.sendStatus(405);
-      }
+      //https://github.com/directus/directus/discussions/8867#discussioncomment-1977411
+      res.redirect(redirectURL);
     });
   }
 
-  static registerEndpoint(listOfAllowedRedirects = []) {
+  static registerEndpoint(listOfAllowedRedirects: string[] = []) {
     return RedirectWithToken.configureRouter.bind(null, listOfAllowedRedirects);
   }
 }
