@@ -18,7 +18,11 @@ export default class RedirectWithToken {
       const redirectURL = redirect + refresh_token;
 
       //TODO allow regex and wildcards
-      if(!listOfAllowedRedirects || listOfAllowedRedirects.includes(redirect)){ // https://github.com/directus/directus/discussions/8867#discussioncomment-1977411
+      if (
+        !listOfAllowedRedirects ||
+        listOfAllowedRedirects.includes(redirect)
+      ) {
+        // https://github.com/directus/directus/discussions/8867#discussioncomment-1977411
         res.redirect(redirectURL);
       } else {
         res.sendStatus(405);
@@ -26,7 +30,7 @@ export default class RedirectWithToken {
     });
   }
 
-  static registerEndpoint(listOfAllowedRedirects=[]) {
+  static registerEndpoint(listOfAllowedRedirects = []) {
     return RedirectWithToken.configureRouter.bind(null, listOfAllowedRedirects);
   }
 }

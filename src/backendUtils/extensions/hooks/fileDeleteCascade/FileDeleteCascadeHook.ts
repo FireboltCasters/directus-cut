@@ -10,16 +10,21 @@ export default class FileDeleteCascadeHook {
    * A small hook to delete the avatar image before user deletion
    */
   static registerHook(collection_name: string, file_field_name: string) {
-    return FileDeleteCascadeHook.handleHook.bind(null, collection_name, file_field_name);
+    return FileDeleteCascadeHook.handleHook.bind(
+      null,
+      collection_name,
+      file_field_name
+    );
   }
 
   private static handleHook(
-      collection_name: string, file_field_name: string,
+    collection_name: string,
+    file_field_name: string,
     registerFunctions: TypeSpecificRegisterFunctions,
     context: RegisterFunctionContext
   ) {
     registerFunctions.filter(
-        collection_name+'.delete',
+      collection_name + '.delete',
       // @ts-ignore
       async (payload: any, input: any, {database, schema, accountability}) => {
         const collectionIds = payload; //get the user ids
@@ -31,9 +36,9 @@ export default class FileDeleteCascadeHook {
             schema,
             accountability,
             context.exceptions,
-              collection_name,
-              file_field_name,
-              collectionId
+            collection_name,
+            file_field_name,
+            collectionId
           ); //delete avatar file
         }
 
