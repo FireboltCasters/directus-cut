@@ -6,11 +6,11 @@ import TypeSpecificRegisterFunctions from '../../../helper/typeInterfaces/TypeSp
 import RegisterFunctionContext from '../../../helper/typeInterfaces/RegisterFunctionContext';
 
 export default class FileDeleteCascadeHook {
-    /**
-     * Register this hook to delete files when item is deleted
-     * @param collection_name the collection name
-     * @param file_field_name the field name of the file
-     */
+  /**
+   * Register this hook to delete files when item is deleted
+   * @param collection_name the collection name
+   * @param file_field_name the field name of the file
+   */
   static registerHook(collection_name: string, file_field_name: string) {
     return FileDeleteCascadeHook.handleHook.bind(
       null,
