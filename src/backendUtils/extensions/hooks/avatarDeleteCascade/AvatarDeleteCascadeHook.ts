@@ -13,7 +13,7 @@ export default class AvatarDeleteCascadeHook {
     return AvatarDeleteCascadeHook.handleHook.bind(null);
   }
 
-  private static handleHook(
+  static handleHook(
     registerFunctions: TypeSpecificRegisterFunctions,
     context: RegisterFunctionContext
   ) {

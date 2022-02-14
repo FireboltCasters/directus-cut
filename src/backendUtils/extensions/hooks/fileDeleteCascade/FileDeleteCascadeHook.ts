@@ -19,7 +19,7 @@ export default class FileDeleteCascadeHook {
     );
   }
 
-  private static handleHook(
+  static handleHook(
     collection_name: string,
     file_field_name: string,
     registerFunctions: TypeSpecificRegisterFunctions,
