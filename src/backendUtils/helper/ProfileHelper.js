@@ -8,7 +8,8 @@ export default class ProfileHelper {
    * @returns {Promise<*>} Returns the Userprofile from the Auth2 instance
    */
   static async getUserProfile(userId, provider, database, env) {
-    const openIDClient = require('openid-client');
+    // eval because otherwise the compiler checks if the package is installed, which is not the case when used in frontend apps
+    const openIDClient = eval("require('openid-client');");
 
     //lets get the existing user first
     const existingUser = await database('directus_users')
