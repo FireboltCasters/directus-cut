@@ -50,6 +50,7 @@
   "homepage": "https://github.com/FireboltCasters/directus-cut#readme",
   "devDependencies": {
     "@types/jest": "^26.0.23",
+    "@types/luxon": "^2.0.8",
     "@types/node": "^16.0.0",
     "gts": "^3.1.0",
     "jest": "^27.0.6",
@@ -60,6 +61,8 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@babel/preset-typescript": "^7.14.5"
+    "@babel/preset-typescript": "^7.14.5",
+    "@directus/sdk": "^9.0.0",
+    "luxon": "^2.2.0"
   }
 }
