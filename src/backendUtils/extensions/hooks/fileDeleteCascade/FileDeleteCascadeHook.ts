@@ -7,7 +7,7 @@ import RegisterFunctionContext from '../../../helper/typeInterfaces/RegisterFunc
 
 export default class FileDeleteCascadeHook {
   /**
-   * Register this hook to delete files when item is deleted
+   * Register this hook to delete files when item with files is deleted
    * @param collection_name the collection name
    * @param file_field_name the field name of the file
    */
