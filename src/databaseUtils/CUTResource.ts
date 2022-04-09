@@ -242,10 +242,14 @@ export default class CUTResource<T> {
     for (let key of Object.keys(obj)) {
       let value = obj[key];
       // directus won't accept the query if these keys are present
-      if (!isCreate &&
-          mode === "toItem" &&
-          collection === "directus_users" &&
-          (key === "tfa_secret" || key === "provider" || key === "external_identifier")) {
+      if (
+        !isCreate &&
+          mode === 'toItem' &&
+        collection === 'directus_users' &&
+        (key === 'tfa_secret' ||
+          key === 'provider' ||
+          key === 'external_identifier')
+      ) {
         continue;
       }
       if (value === null) {
