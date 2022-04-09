@@ -244,7 +244,7 @@ export default class CUTResource<T> {
       // directus won't accept the query if these keys are present
       if (
         !isCreate &&
-          mode === 'toItem' &&
+        mode === 'toItem' &&
         collection === 'directus_users' &&
         (key === 'tfa_secret' ||
           key === 'provider' ||
