@@ -234,14 +234,16 @@ export default class CUTResource<T> {
   private static async convert(
     collection: string,
     obj: any,
-    mode: 'toResource' | 'toItem'
+    mode: 'toResource' | 'toItem',
+    isCreate: boolean = false
   ): Promise<any> {
     await CUTResource.loadMeta();
     let res: any = {};
     for (let key of Object.keys(obj)) {
       let value = obj[key];
       // directus won't accept the query if these keys are present
-      if (mode === "toItem" &&
+      if (!isCreate &&
+          mode === "toItem" &&
           collection === "directus_users" &&
           (key === "tfa_secret" || key === "provider" || key === "external_identifier")) {
         continue;
@@ -275,9 +277,10 @@ export default class CUTResource<T> {
 
   private static async resourceToItem(
     collection: string,
-    resource: any
+    resource: any,
+    isCreate: boolean = false
   ): Promise<{[key: string]: string}> {
-    return await CUTResource.convert(collection, resource, 'toItem');
+    return await CUTResource.convert(collection, resource, 'toItem', isCreate);
   }
 
   private static async loadMeta() {
@@ -470,7 +473,7 @@ export default class CUTResource<T> {
       'create',
       resourceData
     );
-    let data = await CUTResource.resourceToItem(collection, filtered);
+    let data = await CUTResource.resourceToItem(collection, filtered, true);
     let item = await CUTResource.database.createOne(collection, data);
     await CUTResource.setItem(resource, item);
     return resource;
