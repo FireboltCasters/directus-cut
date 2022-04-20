@@ -33,7 +33,7 @@
 
 ## About
 
-A utility helper for directus ... a directors cut :D 
+A utility helper for directus ... a directors cut :D
 
 ## Contributors
 
