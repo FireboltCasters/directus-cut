@@ -1,3 +1,5 @@
+import RegisterFunctionContext from "../../../helper/typeInterfaces/RegisterFunctionContext";
+
 /**
  Create the file: extensions/endpoints/redirect-with-token/index.js
 
@@ -6,14 +8,15 @@
     directusCut.RedirectWithToken.configureRouter(router);
  };
 
- For example: https://<PUBLIC_URL>/api/auth/login/<AUTH_PROVIDER>?redirect=https://<PUBLIC_URL>/api/redirect-with-token?redirect=http://127.0.0.1?access_token=
+ For example: GET https://<PUBLIC_URL>/api/auth/login/<AUTH_PROVIDER>?redirect=https://<PUBLIC_URL>/api/redirect-with-token?redirect=http://127.0.0.1?access_token=
  This will get the access_token and will redirect the user to:
  http://127.0.01?access_token=XXXXXXXXX
  */
 export default class RedirectWithToken {
   private static configureRouter(
     listOfAllowedRedirects: string[],
-    router: any
+    router: any,
+    context: RegisterFunctionContext
   ) {
     router.get('/', (req: any, res: any) => {
       const refresh_token = req.cookies.directus_refresh_token;
