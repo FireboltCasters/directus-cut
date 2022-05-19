@@ -102,7 +102,7 @@ export default class CUTResource<T> {
   }
 
   // private api
-  private static initialized: boolean = false;
+  private static initialized = false;
 
   private static relations: RelationsMap = {};
   private static fieldTypes: FieldTypesMap = {};
@@ -119,11 +119,11 @@ export default class CUTResource<T> {
     first === second;
 
   private static registerTypes(dataType: DataType[]) {
-    let dataTypes = [...dataType];
-    for (let data of dataTypes) {
-      let types = [...data.types];
-      for (let type of types) {
-        if (!!CUTResource.fieldToTypes[type]) {
+    const dataTypes = [...dataType];
+    for (const data of dataTypes) {
+      const types = [...data.types];
+      for (const type of types) {
+        if (CUTResource.fieldToTypes[type]) {
           console.warn(
             '[CUTResource] Conversion function for ' +
               type +
@@ -138,7 +138,7 @@ export default class CUTResource<T> {
   }
 
   private static registerDataTypes() {
-    let booleanType: DataType = {
+    const booleanType: DataType = {
       types: ['boolean'],
       fieldToType: (value: any) => {
         if (typeof value === 'string') {
@@ -153,7 +153,7 @@ export default class CUTResource<T> {
         return first === second;
       },
     };
-    let dateTimeType: DataType = {
+    const dateTimeType: DataType = {
       types: [
         'datetime',
         'date',
@@ -177,7 +177,7 @@ export default class CUTResource<T> {
         return first.equals(second);
       },
     };
-    let integerType: DataType = {
+    const integerType: DataType = {
       types: ['integer'],
       fieldToType: (value: any) => {
         if (typeof value === 'string') {
@@ -192,7 +192,7 @@ export default class CUTResource<T> {
         return first === second;
       },
     };
-    let floatType: DataType = {
+    const floatType: DataType = {
       types: ['decimal'],
       fieldToType: (value: any) => {
         if (typeof value === 'string') {
@@ -207,7 +207,7 @@ export default class CUTResource<T> {
         return first === second;
       },
     };
-    let jsonType: DataType = {
+    const jsonType: DataType = {
       types: ['json'],
       fieldToType: (value: any) => {
         if (typeof value === 'string') {
@@ -235,12 +235,12 @@ export default class CUTResource<T> {
     collection: string,
     obj: any,
     mode: 'toResource' | 'toItem',
-    isCreate: boolean = false
+    isCreate = false
   ): Promise<any> {
     await CUTResource.loadMeta();
-    let res: any = {};
-    for (let key of Object.keys(obj)) {
-      let value = obj[key];
+    const res: any = {};
+    for (const key of Object.keys(obj)) {
+      const value = obj[key];
       // directus won't accept the query if these keys are present
       if (
         !isCreate &&
@@ -257,7 +257,7 @@ export default class CUTResource<T> {
       } else if (value === undefined) {
         res[key] = undefined;
       } else {
-        let type = CUTResource.fieldTypes[collection][key];
+        const type = CUTResource.fieldTypes[collection][key];
         let caster;
         if (mode === 'toResource') {
           caster =
@@ -282,21 +282,21 @@ export default class CUTResource<T> {
   private static async resourceToItem(
     collection: string,
     resource: any,
-    isCreate: boolean = false
+    isCreate = false
   ): Promise<{[key: string]: string}> {
     return await CUTResource.convert(collection, resource, 'toItem', isCreate);
   }
 
   private static async loadMeta() {
     if (!CUTResource.initialized) {
-      let fieldsData = await CUTResource.database.readMany('directus_fields');
-      for (let data of fieldsData.data) {
-        let collection = CUTResource.fieldTypes[data.collection] || {};
+      const fieldsData = await CUTResource.database.readMany('directus_fields');
+      for (const data of fieldsData.data) {
+        const collection = CUTResource.fieldTypes[data.collection] || {};
         collection[data.field] = data.type.toLowerCase();
         CUTResource.fieldTypes[data.collection] = collection;
 
-        let foreignKeyTable = data.schema?.foreign_key_table;
-        if (!!foreignKeyTable) {
+        const foreignKeyTable = data.schema?.foreign_key_table;
+        if (foreignKeyTable) {
           if (!CUTResource.relations[data.collection]) {
             CUTResource.relations[data.collection] = {};
           }
@@ -306,21 +306,21 @@ export default class CUTResource<T> {
           }
         }
       }
-      for (let relationKey of Object.keys(CUTResource.relations)) {
-        let foreignKeys = Object.keys(CUTResource.relations[relationKey]);
+      for (const relationKey of Object.keys(CUTResource.relations)) {
+        const foreignKeys = Object.keys(CUTResource.relations[relationKey]);
         if (foreignKeys.length < 2) {
           continue;
         }
         for (let i = 0; i < foreignKeys.length; i++) {
           for (let j = 0; j < foreignKeys.length; j++) {
-            let firstKey = foreignKeys[i];
-            let secondKey = foreignKeys[j];
-            let firstTable = CUTResource.relations[relationKey][firstKey];
-            let secondTable = CUTResource.relations[relationKey][secondKey];
+            const firstKey = foreignKeys[i];
+            const secondKey = foreignKeys[j];
+            const firstTable = CUTResource.relations[relationKey][firstKey];
+            const secondTable = CUTResource.relations[relationKey][secondKey];
             if (firstTable === secondTable) {
               continue;
             }
-            let combinedKey = firstTable + ':' + secondTable;
+            const combinedKey = firstTable + ':' + secondTable;
             if (!CUTResource.junctionTables[combinedKey]) {
               CUTResource.junctionTables[combinedKey] = [];
             }
@@ -334,20 +334,20 @@ export default class CUTResource<T> {
           }
         }
       }
-      let permissionsData = await CUTResource.database.readMany(
+      const permissionsData = await CUTResource.database.readMany(
         'directus_permissions'
       );
-      for (let data of permissionsData.data) {
-        let role: string = data.role;
-        let collection: string = data.collection;
-        let action: Operation = data.action;
+      for (const data of permissionsData.data) {
+        const role: string = data.role;
+        const collection: string = data.collection;
+        const action: Operation = data.action;
         if (!CUTResource.fieldPermissionsByRole[role]) {
           CUTResource.fieldPermissionsByRole[role] = {};
         }
         if (!CUTResource.fieldPermissionsByRole[role][collection]) {
           CUTResource.fieldPermissionsByRole[role][collection] = {};
         }
-        let fields: string[] =
+        const fields: string[] =
           data.fields instanceof Array ? data.fields : [data.fields];
         CUTResource.fieldPermissionsByRole[role][collection][action] = fields;
       }
@@ -362,19 +362,19 @@ export default class CUTResource<T> {
     resourceData: any
   ): Promise<any> {
     await CUTResource.loadMeta();
-    let isAdmin = await CUTResource.database.isCurrentUserAdmin();
+    const isAdmin = await CUTResource.database.isCurrentUserAdmin();
     if (isAdmin) {
       return resourceData;
     }
-    let role = await CUTResource.database.getCurrentUserRole();
-    let allowedFields =
+    const role = await CUTResource.database.getCurrentUserRole();
+    const allowedFields =
       CUTResource.fieldPermissionsByRole[role][collection][operation] || [];
     if (allowedFields.length === 1 && allowedFields[0] === '*') {
       return resourceData;
     }
-    let res: any = {};
-    for (let field of allowedFields) {
-      let value = resourceData[field];
+    const res: any = {};
+    for (const field of allowedFields) {
+      const value = resourceData[field];
       if (value !== undefined && value !== null) {
         res[field] = value;
       }
@@ -387,10 +387,10 @@ export default class CUTResource<T> {
     first: any,
     second: any
   ): boolean {
-    let keys = Object.keys(CUTResource.fieldTypes[collection]);
-    for (let key of keys) {
-      let firstValue = first[key];
-      let secondValue = second[key];
+    const keys = Object.keys(CUTResource.fieldTypes[collection]);
+    for (const key of keys) {
+      const firstValue = first[key];
+      const secondValue = second[key];
       if (
         (firstValue === null && secondValue === null) ||
         (firstValue === undefined && secondValue === undefined)
@@ -398,8 +398,8 @@ export default class CUTResource<T> {
         continue;
       }
       if (firstValue !== undefined && firstValue !== null) {
-        let isFirstArray = Array.isArray(firstValue);
-        let isSecondArray = Array.isArray(secondValue);
+        const isFirstArray = Array.isArray(firstValue);
+        const isSecondArray = Array.isArray(secondValue);
         if (isFirstArray && isSecondArray) {
           if (firstValue.length !== secondValue.length) {
             return false;
@@ -410,8 +410,8 @@ export default class CUTResource<T> {
         ) {
           return false;
         }
-        let type = CUTResource.fieldTypes[collection][key];
-        let comparator =
+        const type = CUTResource.fieldTypes[collection][key];
+        const comparator =
           CUTResource.typeComparisons[type] || CUTResource.defaultComparator;
         if (!comparator(firstValue, secondValue)) {
           return false;
@@ -449,8 +449,8 @@ export default class CUTResource<T> {
     multiSortMeta: any | null,
     filterParams: object | null
   ): Promise<CUTResource<T>[]> {
-    let res: CUTResource<T>[] = [];
-    let all = await CUTResource.database.readMany(collection, {
+    const res: CUTResource<T>[] = [];
+    const all = await CUTResource.database.readMany(collection, {
       offset: offset,
       limit: limit,
       meta: multiSortMeta,
@@ -459,8 +459,8 @@ export default class CUTResource<T> {
     if (!all.data || all.data.length === 0) {
       return res;
     }
-    for (let item of all.data) {
-      let resource = new CUTResource<T>(collection);
+    for (const item of all.data) {
+      const resource = new CUTResource<T>(collection);
       await CUTResource.setItem(resource, item);
       res.push(resource);
     }
@@ -471,14 +471,14 @@ export default class CUTResource<T> {
     collection: string,
     resourceData: any
   ): Promise<CUTResource<T> | null> {
-    let resource = new CUTResource<T>(collection);
-    let filtered = await CUTResource.filterFieldsByPermission(
+    const resource = new CUTResource<T>(collection);
+    const filtered = await CUTResource.filterFieldsByPermission(
       collection,
       'create',
       resourceData
     );
-    let data = await CUTResource.resourceToItem(collection, filtered, true);
-    let item = await CUTResource.database.createOne(collection, data);
+    const data = await CUTResource.resourceToItem(collection, filtered, true);
+    const item = await CUTResource.database.createOne(collection, data);
     await CUTResource.setItem(resource, item);
     return resource;
   }
@@ -498,7 +498,10 @@ export default class CUTResource<T> {
   }
 
   async load(primaryKey: number | string) {
-    let item = await CUTResource.database.readOne(this._collection, primaryKey);
+    const item = await CUTResource.database.readOne(
+      this._collection,
+      primaryKey
+    );
     await CUTResource.setItem(this, item);
   }
 
@@ -517,25 +520,25 @@ export default class CUTResource<T> {
     associationTableName: string,
     filterParams?: any
   ): Promise<CUTResource<T>[]> {
-    let res: CUTResource<T>[] = [];
-    let associationRelations = CUTResource.relations[associationTableName];
-    let foreignKeys: {_or: any[]} = {_or: []};
-    for (let key of Object.keys(associationRelations)) {
+    const res: CUTResource<T>[] = [];
+    const associationRelations = CUTResource.relations[associationTableName];
+    const foreignKeys: {_or: any[]} = {_or: []};
+    for (const key of Object.keys(associationRelations)) {
       foreignKeys._or.push({[`${key}`]: {_eq: this._itemResource.id}});
     }
-    let filter = {_and: [foreignKeys]};
-    if (!!filterParams) {
+    const filter = {_and: [foreignKeys]};
+    if (filterParams) {
       filter._and.push(filterParams);
     }
-    let associations = await CUTResource.database.readMany(
+    const associations = await CUTResource.database.readMany(
       associationTableName,
       {
         filter: filter,
       }
     );
-    if (!!associations) {
-      for (let item of associations.data) {
-        let resource = new CUTResource<T>(associationTableName);
+    if (associations) {
+      for (const item of associations.data) {
+        const resource = new CUTResource<T>(associationTableName);
         await CUTResource.setItem(resource, item, associationTableName);
         res.push(resource);
       }
@@ -548,42 +551,43 @@ export default class CUTResource<T> {
     associationTableName: string,
     filterParams?: any
   ): Promise<CUTResource<T>[]> {
-    let res: CUTResource<T>[] = [];
-    let resIDs: {[key: number]: boolean} = {};
-    for (let junctionTable of junctionTables) {
-      let junctionTableName = junctionTable.name;
-      let junctionTableKeyThis = junctionTable.foreignKeys[this._collection];
-      let junctionTableKeyAssociation =
+    const res: CUTResource<T>[] = [];
+    const resIDs: {[key: number]: boolean} = {};
+    for (const junctionTable of junctionTables) {
+      const junctionTableName = junctionTable.name;
+      const junctionTableKeyThis = junctionTable.foreignKeys[this._collection];
+      const junctionTableKeyAssociation =
         junctionTable.foreignKeys[associationTableName];
-      let junctionAssociations = await CUTResource.database.readMany(
+      const junctionAssociations = await CUTResource.database.readMany(
         junctionTableName,
         {
           filter: {[`${junctionTableKeyThis}`]: {_eq: this._itemResource.id}},
         }
       );
-      let query: {_and: any[]} = {_and: [{_or: []}]};
+      const query: {_and: any[]} = {_and: [{_or: []}]};
       if (!!junctionAssociations && junctionAssociations.data.length > 0) {
-        for (let junctionAssociation of junctionAssociations.data) {
-          let associationID = junctionAssociation[junctionTableKeyAssociation];
+        for (const junctionAssociation of junctionAssociations.data) {
+          const associationID =
+            junctionAssociation[junctionTableKeyAssociation];
           query._and[0]._or.push({id: {_eq: associationID}});
         }
       } else {
         return res;
       }
-      if (!!filterParams) {
+      if (filterParams) {
         query._and.push(filterParams);
       }
-      let associations = await CUTResource.database.readMany(
+      const associations = await CUTResource.database.readMany(
         associationTableName,
         {
           filter: query,
         }
       );
-      if (!!associations) {
-        for (let item of associations.data) {
-          let newID = item.id;
+      if (associations) {
+        for (const item of associations.data) {
+          const newID = item.id;
           if (!resIDs[newID]) {
-            let resource = new CUTResource<T>(associationTableName);
+            const resource = new CUTResource<T>(associationTableName);
             await CUTResource.setItem(resource, item, associationTableName);
             res.push(resource);
             resIDs[newID] = true;
@@ -599,7 +603,7 @@ export default class CUTResource<T> {
     filterParams?: any
   ): Promise<CUTResource<T>[]> {
     await CUTResource.loadMeta();
-    let junctionTables =
+    const junctionTables =
       CUTResource.junctionTables[this._collection + ':' + associationTableName];
 
     // probably a one to many relation, may still not exist, but we will handle that later
@@ -617,9 +621,9 @@ export default class CUTResource<T> {
     associationTableName: string,
     associationResource: CUTResource<T>
   ): Promise<void> {
-    let relation = CUTResource.relations[associationTableName];
-    for (let key of Object.keys(relation)) {
-      let collection = relation[key];
+    const relation = CUTResource.relations[associationTableName];
+    for (const key of Object.keys(relation)) {
+      const collection = relation[key];
       if (collection === this._collection) {
         associationResource.setField(key, this._itemResource.id);
         await associationResource.save();
@@ -632,11 +636,11 @@ export default class CUTResource<T> {
     associationTableName: string,
     associationResource: CUTResource<T>
   ): Promise<void> {
-    let relation = CUTResource.relations[associationTableName];
+    const relation = CUTResource.relations[associationTableName];
     let thisKey = '';
     let associationKey = '';
-    for (let key of Object.keys(relation)) {
-      let collection = relation[key];
+    for (const key of Object.keys(relation)) {
+      const collection = relation[key];
       if (collection === this._collection) {
         thisKey = key;
       } else if (collection === associationResource._collection) {
@@ -644,7 +648,7 @@ export default class CUTResource<T> {
       }
     }
     if (thisKey !== '' && associationKey !== '') {
-      let data = {
+      const data = {
         [`${thisKey}`]: this._itemResource.id,
         [`${associationKey}`]: associationResource._itemResource.id,
       };
@@ -668,13 +672,13 @@ export default class CUTResource<T> {
   }
 
   async save() {
-    let filtered = await CUTResource.filterFieldsByPermission(
+    const filtered = await CUTResource.filterFieldsByPermission(
       this._collection,
       'update',
       this._itemResource
     );
-    let data = await CUTResource.resourceToItem(this._collection, filtered);
-    let updatedItem = await CUTResource.database.updateOne(
+    const data = await CUTResource.resourceToItem(this._collection, filtered);
+    const updatedItem = await CUTResource.database.updateOne(
       this._collection,
       this._itemResource.id,
       data
@@ -690,7 +694,7 @@ export default class CUTResource<T> {
   }
 
   reset() {
-    for (let key of Object.keys(this._syncItemResource)) {
+    for (const key of Object.keys(this._syncItemResource)) {
       this._itemResource[key] = this._syncItemResource[key];
     }
   }

@@ -23,7 +23,7 @@ export default class StudIpCustomProviderLogin {
 
     const avatar_filename = await uploadImageFunc(avatar_normal_url);
 
-    let newUpdatedUserInfos = {
+    const newUpdatedUserInfos = {
       first_name: userProfile.name.given,
       last_name: userProfile.name.family,
       email: userProfile.email,

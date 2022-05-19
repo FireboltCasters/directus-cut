@@ -43,7 +43,7 @@ test('Test redirect with endpoint empty', async () => {
 });
 
 test('Test allowed redirect', async () => {
-  let configureMethod = RedirectWithToken.registerEndpoint(
+  const configureMethod = RedirectWithToken.registerEndpoint(
     listOfAllowedRedirects
   );
   configureMethod(router);

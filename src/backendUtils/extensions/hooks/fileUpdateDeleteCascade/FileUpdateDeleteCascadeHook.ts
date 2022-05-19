@@ -31,7 +31,7 @@ export default class FileUpdateDeleteCascadeHook {
       async (payload: any, input: any, {database, schema, accountability}) => {
         if (file_field_name in payload) {
           //is our searched key updated (value can be null!)
-          let collectionIds = input.keys;
+          const collectionIds = input.keys;
           for (const collectionId of collectionIds) {
             // for all users which get deleted
             await AvatarHelper.deleteFileOfCollection(

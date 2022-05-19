@@ -40,20 +40,20 @@ export default class DBFrontend implements DBImplementation {
   }
 
   async getCurrentUserRole(): Promise<string> {
-    let me = await this.database.users.me.read();
-    let role = await this.getRole(me);
+    const me = await this.database.users.me.read();
+    const role = await this.getRole(me);
     return role.id;
   }
 
   async isCurrentUserAdmin(): Promise<boolean> {
-    let me = await this.database.users.me.read();
-    let role = await this.getRole(me);
+    const me = await this.database.users.me.read();
+    const role = await this.getRole(me);
     return role.admin_access;
   }
 
   private async getRole(user: any): Promise<any> {
-    let role_id = user?.role;
-    if (!!role_id) {
+    const role_id = user?.role;
+    if (role_id) {
       return await this.database.roles.readOne(role_id);
     }
     return null;
