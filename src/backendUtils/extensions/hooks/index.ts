@@ -3,7 +3,7 @@ import UpdateSSOUsersHook from './updateSSOUsers/UpdateSSOUsersHook';
 import StudIpCustomProviderLogin from './updateSSOUsers/StudIpCustomProviderLogin';
 import FileDeleteCascadeHook from './fileDeleteCascade/FileDeleteCascadeHook';
 import FileUpdateDeleteCascadeHook from './fileUpdateDeleteCascade/FileUpdateDeleteCascadeHook';
-import ProfileCreateHook from "./profileCreateHook/ProfileCreateHook";
+import ProfileCreateHook from './profileCreateHook/ProfileCreateHook';
 
 export default class BackendHooks {
   static AvatarDeleteCascadeHook = AvatarDeleteCascadeHook;
