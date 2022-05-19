@@ -7,7 +7,7 @@ import EventHelper from '../EventHelper';
  * You will need to create a table (e. G. "profiles") with a field "user" which relates to "directus_users"
  */
 
-const DEFAULT_PROFILE_TABLENAME = 'profiles';
+const DEFAULT_PROFILE_TABLENAME: string = "profiles"
 
 export default class ProfileCreateHook {
   static handleHook(
@@ -17,25 +17,29 @@ export default class ProfileCreateHook {
   ) {
     const {filter, action, init, schedule} = registerFunctions;
 
-    action(EventHelper.USERS_LOGIN_EVENT, async (input, actionContext) => {
-      const {database, schema, accountability} = actionContext;
-      const currentProvider = input.provider; //get the current provider
-      let userId = input.user;
-      const existingUser = await database('directus_users')
-        .where({id: userId})
-        .first(); //get user
-      if (!existingUser) {
-        //handle no user found error
-        throw new InvalidPayloadException(
-          'profileCreateHook: No user found with id: ' + userId
-        );
-      }
+    static handleHook(
+        tablename_profiles: string,
+        registerFunctions: TypeSpecificRegisterFunctions,
+        context: RegisterFunctionContext
+    ) {
+        const { filter, action, init, schedule } = registerFunctions;
 
-      const existingProfile = await database(tablename_profiles)
-        .where({user: userId})
-        .first(); //get user
-      if (!existingProfile) {
-        const status_published = 'published';
+            action(
+                EventHelper.USERS_LOGIN_EVENT,
+                async (input: any, actionContext: any) => {
+                    const {database, schema, accountability} = actionContext;
+                    const currentProvider = input.provider; //get the current provider
+                    let userId = input.user;
+                    const existingUser = await database('directus_users')
+                        .where({id: userId})
+                        .first(); //get user
+                    if (!existingUser) {
+                        //handle no user found error
+                        // @ts-ignore
+                        throw new InvalidPayloadException(
+                            'profileCreateHook: No user found with id: ' + userId
+                        );
+                    }
 
         let profile = {
           user: userId,
@@ -50,13 +54,20 @@ export default class ProfileCreateHook {
     });
   }
 
-  /**
-   * Register the profile create hook
-   * @param customProfileTablename you can specify the name of the profile tablename
-   */
-  static;
-  registerHook(customProfileTablename?) {
-    let tablename = customProfileTablename || DEFAULT_PROFILE_TABLENAME;
-    return ProfileCreateHook.handleHook.bind(null, tablename);
-  }
+                    return input;
+                }
+            );
+
+    }
+
+    /**
+     * Register the profile create hook
+     * @param customProfileTablename you can specify the name of the profile tablename
+     */
+    static registerHook(customProfileTablename?: string)
+    {
+        let tablename: string = customProfileTablename || DEFAULT_PROFILE_TABLENAME;
+        return ProfileCreateHook.handleHook.bind(null, tablename);
+    }
+
 }
