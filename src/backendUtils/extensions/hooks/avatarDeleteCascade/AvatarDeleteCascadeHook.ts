@@ -4,6 +4,7 @@
 import AvatarHelper from '../../../helper/AvatarHelper';
 import TypeSpecificRegisterFunctions from '../../../helper/typeInterfaces/TypeSpecificRegisterFunctions';
 import RegisterFunctionContext from '../../../helper/typeInterfaces/RegisterFunctionContext';
+import EventHelper from "../EventHelper";
 
 export default class AvatarDeleteCascadeHook {
   /**
@@ -18,7 +19,7 @@ export default class AvatarDeleteCascadeHook {
     context: RegisterFunctionContext
   ) {
     registerFunctions.filter(
-      'users.delete',
+        EventHelper.USERS_DELETE_EVENT,
       // @ts-ignore
       async (payload: any, input: any, {database, schema, accountability}) => {
         const usersIds = payload; //get the user ids

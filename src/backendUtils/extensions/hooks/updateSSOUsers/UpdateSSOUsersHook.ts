@@ -4,6 +4,7 @@ import FolderHelper from '../../../helper/FolderHelper';
 import AvatarHelper from '../../../helper/AvatarHelper';
 import ProfileHelper from '../../../helper/ProfileHelper';
 import ActionContextInterface from '../../../helper/typeInterfaces/ActionContextInterface';
+import EventHelper from "../EventHelper";
 
 export default class UpdateSSOUsersHook {
   static registerHook(mappingOfProviderNameToHandler: any) {
@@ -19,7 +20,7 @@ export default class UpdateSSOUsersHook {
     context: RegisterFunctionContext
   ) {
     registerFunctions.action(
-      'auth.login',
+        EventHelper.USERS_LOGIN_EVENT,
       async (input: any, actionContext: ActionContextInterface) => {
         const database = actionContext.database;
         const schema = actionContext.schema;
