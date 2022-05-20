@@ -50,6 +50,7 @@ export default class FileUpdateDeleteCascadeHook {
               file_field_name,
               payload,
               input,
+                database, schema, accountability,
               registerFunctions,
               context
             );
@@ -76,6 +77,7 @@ export default class FileUpdateDeleteCascadeHook {
               file_field_name,
               payload,
               input,
+                database, schema, accountability,
               registerFunctions,
               context
             );
