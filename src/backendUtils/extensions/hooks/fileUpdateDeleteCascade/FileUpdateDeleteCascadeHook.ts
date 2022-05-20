@@ -18,8 +18,8 @@ export default class FileUpdateDeleteCascadeHook {
       null,
       collection_name,
       file_field_name,
-        beforeDelete,
-        afterDelete
+      beforeDelete,
+      afterDelete
     );
   }
 
@@ -39,8 +39,15 @@ export default class FileUpdateDeleteCascadeHook {
           //is our searched key updated (value can be null!)
           const collectionIds = input.keys; // get all items which get updated
 
-          if(!!beforeDelete){
-            payload = await beforeDelete(collection_name, file_field_name, payload, input, registerFunctions, context)
+          if (!!beforeDelete) {
+            payload = await beforeDelete(
+              collection_name,
+              file_field_name,
+              payload,
+              input,
+              registerFunctions,
+              context
+            );
           }
 
           for (const collectionId of collectionIds) { // for item which gets updated
@@ -55,11 +62,17 @@ export default class FileUpdateDeleteCascadeHook {
               file_field_name,
               collectionId
             ); //delete file
-
           }
 
-          if(!!afterDelete){
-            payload = await afterDelete(collection_name, file_field_name, payload, input, registerFunctions, context)
+          if (!!afterDelete) {
+            payload = await afterDelete(
+              collection_name,
+              file_field_name,
+              payload,
+              input,
+              registerFunctions,
+              context
+            );
           }
         }
 
