@@ -11,17 +11,21 @@ export default class FileUpdateDeleteCascadeHook {
    * @param collection_name the collection name
    * @param file_field_name the field name of the file
    */
-  static registerHook(collection_name: string, file_field_name: string) {
+  static registerHook(collection_name: string, file_field_name: string, beforeDelete?, afterDelete?) {
     return FileUpdateDeleteCascadeHook.handleHook.bind(
       null,
       collection_name,
-      file_field_name
+      file_field_name,
+        beforeDelete,
+        afterDelete
     );
   }
 
   static handleHook(
     collection_name: string,
     file_field_name: string,
+    beforeDelete: any,
+    afterDelete: any,
     registerFunctions: TypeSpecificRegisterFunctions,
     context: RegisterFunctionContext
   ) {
@@ -31,9 +35,14 @@ export default class FileUpdateDeleteCascadeHook {
       async (payload: any, input: any, {database, schema, accountability}) => {
         if (file_field_name in payload) {
           //is our searched key updated (value can be null!)
-          const collectionIds = input.keys;
-          for (const collectionId of collectionIds) {
-            // for all users which get deleted
+          const collectionIds = input.keys; // get all items which get updated
+
+          if(!!beforeDelete){
+            payload = await beforeDelete(collection_name, file_field_name, payload, input, registerFunctions, context)
+          }
+
+          for (const collectionId of collectionIds) { // for item which gets updated
+            
             await AvatarHelper.deleteFileOfCollection(
               context.services,
               database,
@@ -43,7 +52,12 @@ export default class FileUpdateDeleteCascadeHook {
               collection_name,
               file_field_name,
               collectionId
-            ); //delete avatar file
+            ); //delete file
+
+          }
+
+          if(!!afterDelete){
+            payload = await afterDelete(collection_name, file_field_name, payload, input, registerFunctions, context)
           }
         }
 
