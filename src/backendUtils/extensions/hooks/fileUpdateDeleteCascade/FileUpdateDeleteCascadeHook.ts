@@ -10,8 +10,10 @@ export default class FileUpdateDeleteCascadeHook {
    * Register this hook to delete files when item is updated
    * @param collection_name the collection name
    * @param file_field_name the field name of the file
+   * @param beforeDelete [optional] a hook before the deletion of the file. Must return payload (collection_name, file_field_name, payload, input, registerFunctions, context)
+   * @param afterDelete [optional] a hook after the deletion of the file. Must return payload (collection_name, file_field_name, payload, input, registerFunctions, context)
    */
-  static registerHook(collection_name: string, file_field_name: string, beforeDelete?, afterDelete?) {
+  static registerHook(collection_name: string, file_field_name: string, beforeDelete?: any, afterDelete?: any) {
     return FileUpdateDeleteCascadeHook.handleHook.bind(
       null,
       collection_name,
@@ -42,7 +44,7 @@ export default class FileUpdateDeleteCascadeHook {
           }
 
           for (const collectionId of collectionIds) { // for item which gets updated
-            
+
             await AvatarHelper.deleteFileOfCollection(
               context.services,
               database,
