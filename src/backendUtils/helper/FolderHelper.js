@@ -16,8 +16,7 @@ export default class FolderHelper {
     schema,
     accountability,
     exceptions,
-    folder_name,
-    parent_id = null
+    folder_name
   ) {
     const {InvalidPayloadException} = exceptions;
     if (!folder_name) {
@@ -33,27 +32,22 @@ export default class FolderHelper {
       services
     ); //get admin permission
     try {
-      const folder_instances = await folderService.readByQuery({
+      const folder_instances_answer = await folderService.readByQuery({
         filter: {
           _and: [
             {
               name: {
                 _eq: folder_name,
               },
-            },
-            {
-              parent: {
-                _eq: parent_id,
-              },
-            },
+            }
           ],
         },
       }); //search for folder
+
       if (folder_instances.length === 0) {
         //no folder found
         const createdFolder = await folderService.createOne({
           name: folder_name,
-          parent: parent_id,
         }); //create one
         return createdFolder; //return new folder id
       } else {
