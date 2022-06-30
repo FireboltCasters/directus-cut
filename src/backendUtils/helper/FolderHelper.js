@@ -39,7 +39,7 @@ export default class FolderHelper {
               name: {
                 _eq: folder_name,
               },
-            }
+            },
           ],
         },
       }); //search for folder
