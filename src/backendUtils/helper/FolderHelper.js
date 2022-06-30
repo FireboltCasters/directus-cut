@@ -32,7 +32,7 @@ export default class FolderHelper {
       services
     ); //get admin permission
     try {
-      const folder_instances_answer = await folderService.readByQuery({
+      const folder_instances = await folderService.readByQuery({
         filter: {
           _and: [
             {
