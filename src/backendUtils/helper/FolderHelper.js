@@ -38,16 +38,16 @@ export default class FolderHelper {
           _and: [
             {
               name: {
-                _eq: folder_name
-              }
+                _eq: folder_name,
+              },
             },
             {
               parent: {
-                _eq: parent_id
-              }
-            }
-          ]
-        }
+                _eq: parent_id,
+              },
+            },
+          ],
+        },
       }); //search for folder
       if (folder_instances.length === 0) {
         //no folder found
