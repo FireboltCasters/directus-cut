@@ -34,19 +34,19 @@ export default class ProfileCreateHook {
           );
         }
 
-        if(existingUser.profile) {
-            //user already has a profile
-            return input;
+        if (existingUser.profile) {
+          //user already has a profile
+          return input;
         } else {
-            //create a profile for the user
-            const newProfile = await database(tablename_profiles)
-              .insert({})
-              .returning('*');
-            //update the user
-            await database('directus_users')
-              .where({id: userId})
-              .update({profile: newProfile[0].id});
-            return input;
+          //create a profile for the user
+          const newProfile = await database(tablename_profiles)
+            .insert({})
+            .returning('*');
+          //update the user
+          await database('directus_users')
+            .where({id: userId})
+            .update({profile: newProfile[0].id});
+          return input;
         }
       }
     );
