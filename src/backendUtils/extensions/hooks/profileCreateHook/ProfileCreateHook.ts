@@ -34,22 +34,20 @@ export default class ProfileCreateHook {
           );
         }
 
-        const existingProfile = await database(tablename_profiles)
-          .where({user: userId})
-          .first(); //get user
-        if (!existingProfile) {
-          const status_published = 'published';
-
-          let profile = {
-            user: userId,
-            status: status_published,
-          };
-          await database(tablename_profiles).insert(profile);
+        if(existingUser.profile) {
+            //user already has a profile
+            return input;
         } else {
-          //                        console.log(existingProfile);
+            //create a profile for the user
+            const newProfile = await database(tablename_profiles)
+              .insert({})
+              .returning('*');
+            //update the user
+            await database('directus_users')
+              .where({id: userId})
+              .update({profile: newProfile[0].id});
+            return input;
         }
-
-        return input;
       }
     );
   }
