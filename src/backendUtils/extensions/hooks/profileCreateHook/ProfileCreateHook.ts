@@ -22,6 +22,7 @@ export default class ProfileCreateHook {
  //     async (input: any, actionContext: any) => { /** action */
         async (input: any, meta: any, actionContext: any) => { /** filter */
         console.log('FILTER: User logged in');
+        console.log(Object.keys(actionContext));
         const {database, schema, accountability} = actionContext;
         const currentProvider = input.provider; //get the current provider
         let userId = input.user;
