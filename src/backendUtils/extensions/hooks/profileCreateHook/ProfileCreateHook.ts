@@ -28,7 +28,9 @@ export default class ProfileCreateHook {
         const {database, schema, accountability} = actionContext;
         const currentProvider = input.provider; //get the current provider
         let userId = input.user;
-        const existingUsers = await database('directus_users').where({id: userId});
+        const existingUsers = await database('directus_users').where({
+          id: userId,
+        });
         console.log('existingUsers', existingUsers);
         const existingUser = existingUsers[0];
         if (!existingUser) {
