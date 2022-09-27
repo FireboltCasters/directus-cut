@@ -34,27 +34,35 @@ export default class ProfileCreateHook {
           );
         }
 
-        console.log("profileCreateHook: User found: " + userId);
-        console.log("profile: "+JSON.stringify(existingUser?.profile));
+        console.log('profileCreateHook: User found: ' + userId);
+        console.log('profile: ' + JSON.stringify(existingUser?.profile));
         if (existingUser?.profile) {
-            console.log("profileCreateHook: User already has a profile");
+          console.log('profileCreateHook: User already has a profile');
           //user already has a profile
           return input;
         } else {
-            console.log("profileCreateHook: User has no profile yet");
+          console.log('profileCreateHook: User has no profile yet');
           //create a profile for the user
           const newProfiles = await database(tablename_profiles).insert({});
           //update the user
-            console.log("profileCreateHook: User newProfiles created: " + JSON.stringify(newProfiles));
-            const newProfile = newProfiles[0];
-            console.log("profileCreateHook: User newProfile created: " + JSON.stringify(newProfile));
-            if(newProfile){
-                let updatedUser = await database('directus_users')
-                    .where({id: userId})
-                    .update({profile: newProfile});
-                console.log("profileCreateHook: User updated: " + JSON.stringify(updatedUser));
-                return input;
-            }
+          console.log(
+            'profileCreateHook: User newProfiles created: ' +
+              JSON.stringify(newProfiles)
+          );
+          const newProfile = newProfiles[0];
+          console.log(
+            'profileCreateHook: User newProfile created: ' +
+              JSON.stringify(newProfile)
+          );
+          if (newProfile) {
+            let updatedUser = await database('directus_users')
+              .where({id: userId})
+              .update({profile: newProfile});
+            console.log(
+              'profileCreateHook: User updated: ' + JSON.stringify(updatedUser)
+            );
+            return input;
+          }
         }
       }
     );
