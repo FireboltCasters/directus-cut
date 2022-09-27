@@ -20,7 +20,7 @@ export default class ProfileCreateHook {
     filter(
       EventHelper.USERS_LOGIN_EVENT,
       async (input: any, actionContext: any) => {
-          console.log("FILTER: User logged in");
+        console.log('FILTER: User logged in');
         const {database, schema, accountability} = actionContext;
         const currentProvider = input.provider; //get the current provider
         let userId = input.user;
