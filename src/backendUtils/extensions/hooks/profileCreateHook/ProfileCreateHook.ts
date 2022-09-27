@@ -22,22 +22,13 @@ export default class ProfileCreateHook {
       //     async (input: any, actionContext: any) => { /** action */
       async (input: any, meta: any, actionContext: any) => {
         /** filter */
-        console.log('FILTER: User logged in');
-        console.log(Object.keys(meta));
-        console.log(meta);
-        console.log(Object.keys(actionContext));
-        console.log(actionContext);
-        console.log(Object.keys(input));
-        console.log(input);
         const {database, schema, accountability} = actionContext;
         const currentProvider = input.provider; //get the current provider
         //        let userId = input.user; // action
         let userId = meta.user; // filter
-        console.log('userId: ' + userId);
         const existingUsers = await database('directus_users').where({
           id: userId,
         });
-        console.log('existingUsers', existingUsers);
         const existingUser = existingUsers[0];
         if (!existingUser) {
           //handle no user found error
@@ -47,33 +38,18 @@ export default class ProfileCreateHook {
           );
         }
 
-        console.log('profileCreateHook: User found: ' + userId);
-        console.log('profile: ' + JSON.stringify(existingUser?.profile));
         if (existingUser?.profile) {
-          console.log('profileCreateHook: User already has a profile');
           //user already has a profile
           return input;
         } else {
-          console.log('profileCreateHook: User has no profile yet');
           //create a profile for the user
           const newProfiles = await database(tablename_profiles).insert({});
           //update the user
-          console.log(
-            'profileCreateHook: User newProfiles created: ' +
-              JSON.stringify(newProfiles)
-          );
           const newProfile = newProfiles[0];
-          console.log(
-            'profileCreateHook: User newProfile created: ' +
-              JSON.stringify(newProfile)
-          );
           if (newProfile) {
             let updatedUser = await database('directus_users')
               .where({id: userId})
               .update({profile: newProfile});
-            console.log(
-              'profileCreateHook: User updated: ' + JSON.stringify(updatedUser)
-            );
             return input;
           }
         }
