@@ -24,7 +24,11 @@ export default class ProfileCreateHook {
         /** filter */
         console.log('FILTER: User logged in');
         console.log(Object.keys(meta));
+        console.log(meta);
         console.log(Object.keys(actionContext));
+        console.log(actionContext);
+        console.log(Object.keys(input));
+        console.log(input);
         const {database, schema, accountability} = actionContext;
         const currentProvider = input.provider; //get the current provider
         let userId = input.user;
