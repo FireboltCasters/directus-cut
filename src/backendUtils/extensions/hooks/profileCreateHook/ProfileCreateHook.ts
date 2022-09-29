@@ -7,6 +7,10 @@ import EventHelper from '../EventHelper';
  * You will need to create a table (e. G. "profiles") with a field "user" which relates to "directus_users"
  */
 
+//TODO try catch init if database is not ready
+//TODO init table profiles if not exists
+//TODO check if field profile exists in directus_users
+
 const DEFAULT_PROFILE_TABLENAME = 'profiles';
 
 export default class ProfileCreateHook {
@@ -43,15 +47,21 @@ export default class ProfileCreateHook {
           return input;
         } else {
           //create a profile for the user
-          const newProfiles = await database(tablename_profiles).insert({});
-          //update the user
-          const newProfile = newProfiles[0];
-          if (newProfile) {
-            let updatedUser = await database('directus_users')
-              .where({id: userId})
-              .update({profile: newProfile});
-            return input;
-          }
+            try{
+                const newProfiles = await database(tablename_profiles).insert({});
+                //update the user
+                const newProfile = newProfiles[0];
+                if (newProfile) {
+                    let updatedUser = await database('directus_users')
+                        .where({id: userId})
+                        .update({profile: newProfile});
+                    return input;
+                }
+            } catch (e) {
+                console.log('profileCreateHook: Error while creating profile for user: ' + userId);
+                console.log(e);
+                return input;
+            }
         }
       }
     );
