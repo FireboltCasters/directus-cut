@@ -47,21 +47,24 @@ export default class ProfileCreateHook {
           return input;
         } else {
           //create a profile for the user
-            try{
-                const newProfiles = await database(tablename_profiles).insert({});
-                //update the user
-                const newProfile = newProfiles[0];
-                if (newProfile) {
-                    let updatedUser = await database('directus_users')
-                        .where({id: userId})
-                        .update({profile: newProfile});
-                    return input;
-                }
-            } catch (e) {
-                console.log('profileCreateHook: Error while creating profile for user: ' + userId);
-                console.log(e);
-                return input;
+          try {
+            const newProfiles = await database(tablename_profiles).insert({});
+            //update the user
+            const newProfile = newProfiles[0];
+            if (newProfile) {
+              let updatedUser = await database('directus_users')
+                .where({id: userId})
+                .update({profile: newProfile});
+              return input;
             }
+          } catch (e) {
+            console.log(
+              'profileCreateHook: Error while creating profile for user: ' +
+                userId
+            );
+            console.log(e);
+            return input;
+          }
         }
       }
     );
