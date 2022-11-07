@@ -19,6 +19,7 @@
 <p align="center">
   <a href="https://github.com/FireboltCasters/directus-cut/actions/workflows/npmPublish.yml"><img src="https://github.com/FireboltCasters/directus-cut/actions/workflows/npmPublish.yml/badge.svg" alt="Npm publish" /></a>
   <a href="https://github.com/FireboltCasters/directus-cut/actions/workflows/linter.yml"><img src="https://github.com/FireboltCasters/directus-cut/actions/workflows/linter.yml/badge.svg" alt="Build status" /></a>
+    <a href="https://jessemillar.com/r/man-hours"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fmh.jessemillar.com%2Fhours%3Frepo%3Dhttps%3A%2F%2Fgithub.com%2FFireboltCasters%2Fdirectus-cut" alt="size" /></a>
   <a href="https://sonarcloud.io/dashboard?id=FireboltCasters_directus-cut"><img src="https://sonarcloud.io/api/project_badges/measure?project=FireboltCasters_directus-cut&metric=alert_status" alt="Quality Gate" /></a>
   <a href="https://sonarcloud.io/dashboard?id=FireboltCasters_directus-cut"><img src="https://sonarcloud.io/api/project_badges/measure?project=FireboltCasters_directus-cut&metric=bugs" alt="Bugs" /></a>
   <a href="https://sonarcloud.io/dashboard?id=FireboltCasters_directus-cut"><img src="https://sonarcloud.io/api/project_badges/measure?project=FireboltCasters_directus-cut&metric=coverage" alt="Coverage" /></a>
