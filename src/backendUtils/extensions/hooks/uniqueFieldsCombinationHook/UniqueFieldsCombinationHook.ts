@@ -45,7 +45,7 @@ export default class UniqueFieldsCombinationHook {
    context: RegisterFunctionContext
  ) {
   //@ts-ignore
-  async function hookLogic(payload: any, meta: any, {database, schema, accountability}){
+  async function hookLogic(payload: any, meta: any, {database: any, schema: any, accountability: any}){
     const { event, collection} = meta
     const keys = meta.keys as string[]
   
@@ -55,6 +55,7 @@ export default class UniqueFieldsCombinationHook {
     const { ItemsService } = context.services;
     //@ts-ignore
     const { InvalidPayloadException } = context.exceptions
+    //@ts-ignore
     const collectionService = new ItemsService(collection, {schema: schema, knex: database})
     const uniqueFields = data[collection].fields
     const errorMessage = data[collection].message
@@ -135,6 +136,7 @@ export default class UniqueFieldsCombinationHook {
 
           //@ts-ignore
           const collectionOfRelation = schema.relations.find(rel => rel.collection === collection && rel.field === firstField)["schema"]["foreign_key_table"]
+          //@ts-ignore
           const relationService = new ItemsService(collectionOfRelation, {schema: schema, knex: database})
 
           const data = await relationService.readOne(payloadItem[firstField], {fields: [restField]})
