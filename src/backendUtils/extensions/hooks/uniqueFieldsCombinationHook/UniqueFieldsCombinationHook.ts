@@ -41,10 +41,10 @@ export default class UniqueFieldsCombinationHook {
     registerFunctions: TypeSpecificRegisterFunctions,
     context: RegisterFunctionContext
   ) {
-    //@ts-ignore
     async function hookLogic(
       payload: any,
       meta: any,
+      //@ts-ignore
       {database, schema, accountability}
     ) {
       const {event, collection} = meta;
@@ -122,6 +122,7 @@ export default class UniqueFieldsCombinationHook {
             filledPayloads = [
               ...filledPayloads,
               missingProps.reduce(
+                //@ts-ignore
                 (prev, current) => ({...prev, [current]: itemData[current]}),
                 {...filteredPayload, id: itemId}
               ),
@@ -157,11 +158,12 @@ export default class UniqueFieldsCombinationHook {
             const [firstField, ...restFields] = field.split('.');
             const restField = restFields.join('.');
 
-          //@ts-ignore
+
             const collectionOfRelation = schema.relations.find(
+              //@ts-ignore
               rel => rel.collection === collection && rel.field === firstField
             )['schema']['foreign_key_table'];
-          //@ts-ignore
+
             const relationService = new ItemsService(collectionOfRelation, {
               schema: schema,
               knex: database,
